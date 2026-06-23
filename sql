@@ -1,0 +1,22 @@
+CREATE DATABASE IF NOT EXISTS ecommerce_demo;
+USE ecommerce_demo;
+
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    fullName VARCHAR(120) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    passwordHash VARCHAR(255) NOT NULL,
+    role VARCHAR(30) NOT NULL,
+    emailVerified BIT NOT NULL,
+    createdAt DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS otp_tokens (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    code VARCHAR(10) NOT NULL,
+    purpose VARCHAR(20) NOT NULL,
+    expiresAt DATETIME NOT NULL,
+    used BIT NOT NULL,
+    CONSTRAINT fk_otp_user FOREIGN KEY (user_id) REFERENCES users(id)
+);
